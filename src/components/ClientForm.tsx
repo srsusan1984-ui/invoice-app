@@ -48,12 +48,6 @@ function ClientForm({
     setDate(joined);
   };
 
-  const openPicker = () => {
-    const picker = document.getElementById("hidden-picker") as HTMLInputElement;
-     
-    if (picker && picker.showPicker) picker.showPicker();
-  };
-
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 bg-white/40 backdrop-blur-md p-8 rounded-[2rem] border border-white/20 shadow-xl">
       
@@ -112,27 +106,32 @@ function ClientForm({
           <label className="absolute left-5 top-4 text-slate-400 font-medium transition-all duration-300 pointer-events-none peer-focus:-top-3 peer-focus:left-4 peer-focus:text-xs peer-focus:text-indigo-600 peer-focus:bg-white peer-focus:px-2 peer-[:not(:placeholder-shown)]:-top-3 peer-[:not(:placeholder-shown)]:left-4 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:text-indigo-600 peer-[:not(:placeholder-shown)]:bg-white peer-[:not(:placeholder-shown)]:px-2">
             Date (DD/MM/YYYY)
           </label>
+          
+          <input 
+            id="hidden-picker" 
+            type="date" 
+            style={{position: 'fixed', left: '-9999px', top: '-9999px', visibility: 'hidden'}}
+            onChange={(e) => {
+              if (e.target.value) {
+                const [y, m, d] = e.target.value.split("-");
+                setDate(`${d}/${m}/${y}`);
+              }
+            }}
+          />
+          
           <button 
             type="button" 
-            onClick={openPicker} 
-            className="absolute right-4 p-2 text-indigo-500 hover:bg-indigo-50 rounded-xl transition-all active:scale-90"
+            onClick={() => {
+              const picker = document.getElementById("hidden-picker") as HTMLInputElement;
+              if (picker) {
+                picker.click();
+              }
+            }}
+            className="absolute right-4 p-2 text-indigo-500 hover:bg-indigo-50 rounded-xl transition-all active:scale-90 cursor-pointer z-10"
           >
             📅
           </button>
         </div>
-        
-        {/* Hidden Browser Picker */}
-        <input 
-          id="hidden-picker" 
-          type="date" 
-          className="absolute opacity-0 pointer-events-none" 
-          onChange={(e) => {
-            if (e.target.value) {
-              const [y, m, d] = e.target.value.split("-");
-              setDate(`${d}/${m}/${y}`);
-            }
-          }}
-        />
       </div>
 
     </div>

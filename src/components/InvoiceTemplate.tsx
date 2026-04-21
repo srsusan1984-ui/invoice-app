@@ -7,7 +7,7 @@ const InvoiceTemplate = ({ data }: any) => {
   const total = subtotal + tax;
 
   return (
-    <div className="w-[210mm] min-h-[297mm] p-[25mm] bg-white text-slate-900 font-sans mx-auto shadow-2xl">
+    <div className="w-[210mm] h-[297mm] overflow-hidden p-[25mm] bg-white text-slate-900 font-sans mx-auto shadow-2xl">
       {}
       <div className="flex justify-between items-start mb-20">
         <div className="space-y-6">
